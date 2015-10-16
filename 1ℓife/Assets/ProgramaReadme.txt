@@ -13,4 +13,16 @@
 
 プロパティ　定数と一緒
 
-クラスのフィールド内での宣言は　アンダーバーをつけるように　int _homo;
+クラスのフィールド内での宣言は　アンダーバーをつけるように
+private int _homo;
+public int _HOMO{ get{ return _homo; }}
+private const int _HOMO_VALUE;　
+etc...
+
+publicをつけていいのはプロパティと関数だけ(関数もできるだけprivateにしたい)
+private int _homo;
+public int _HOMO{ get{ return _homo; }}
+public void HomoCreate()
+{
+	
+}
