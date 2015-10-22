@@ -17,6 +17,10 @@ public class PlayerManagement : MonoBehaviour
     [SerializeField]
     private float _skySpeed = 0.1f;
 
+    //摩擦力
+    [SerializeField]
+    private float _friction = 0.1f;
+
     //空中にいるかどうかのフラグ
     private bool _jump = true;
 
@@ -27,6 +31,7 @@ public class PlayerManagement : MonoBehaviour
         AIR = 1,
         ICE = 2,
     }
+
     [SerializeField]
     private PlayerMode _playerMode = PlayerMode.WATER;
 
@@ -47,7 +52,11 @@ public class PlayerManagement : MonoBehaviour
         _rigidBody = GetComponent<Rigidbody>();
         //XY軸の回転を無効化
         _rigidBody.constraints = RigidbodyConstraints.FreezeRotationX |
-                         RigidbodyConstraints.FreezeRotationY;
+                         RigidbodyConstraints.FreezeRotationY |
+                         RigidbodyConstraints.FreezeRotationZ;
+
+        //プレイヤータグの追加
+        this.tag = "Player";
     }
 
     private void Update()
@@ -91,13 +100,27 @@ public class PlayerManagement : MonoBehaviour
     {
         //Floorタグのものにぶつかっているとき
         if (collision.gameObject.tag == "Floor")
+        {
+            //地面にいる判定
             _jump = false;
+
+            //地面と同じ角度にする
+            this.transform.rotation = collision.transform.rotation;
+
+            //角度の取得
+            float floorAngle = -1 * (collision.transform.eulerAngles.z);
+            if (floorAngle <= -180) floorAngle = (360 + floorAngle);
+            transform.Translate((floorAngle*(_friction/200)), 0, 0);
+        }
     }
 
     private void OnCollisionExit(Collision collision)
     {
         //Floorタグのものから離れたら
         if (collision.gameObject.tag == "Floor")
+        {
+            //ジャンプしてる判定
             _jump = true;
+        }
     }
 }
