@@ -4,14 +4,15 @@ using System.Collections;
 public class Player : MonoBehaviour
 {
     Rigidbody _rigidbody;
+    Fire _fire;
 
     //重力を反転させるためのbool
     private bool _gravityMode = false;
 
     [SerializeField]
-    private float _gravityX = 0.0f;
+    private float Down_Gravity = 50.0f;
     [SerializeField]
-    private float _gravityY = -5.0f;
+    private float Fly_Gravity = 1;
 
 
     //プレイヤーの各状態を表す変数
@@ -25,14 +26,14 @@ public class Player : MonoBehaviour
 
 
     [SerializeField]
-    private float Jump_Power = 7.0f;
+    private float Jump_Power = 50.0f;
 
     private bool _jump = false;
 
     //ジャンプ
-    private void JumpSystem(Rigidbody _rigidbody, PlayerMode _playerMode, ref bool _jump, float Jump_Power)
+    private void JumpSystem(ref bool _jump)
     {
-        if (!_jump && !(_playerMode == PlayerMode.AIR))
+        if (!_jump && _playerMode == PlayerMode.WATER)
         {
             float _jumpPower = Jump_Power;
             _jump = true;
@@ -41,12 +42,48 @@ public class Player : MonoBehaviour
         }
     }
 
+    //重力
+    private void GravitySystem(ref bool _gravityMode)
+    {
+        if (_gravityMode)
+        {
+            Physics.gravity = new Vector3(0, Fly_Gravity, 0);
+        }
+        else
+        {
+            Physics.gravity = new Vector3(0, -1 * Down_Gravity, 0);
+        }
+
+        switch (_playerMode)
+        {
+            case PlayerMode.WATER:
+
+                _gravityMode = false;
+
+                break;
+
+            case PlayerMode.AIR:
+
+                _gravityMode = true;
+
+                break;
+
+            case PlayerMode.ICE:
+
+                _gravityMode = false;
+
+                break;
+        }
+    }
+
 
     private void Start()
     {
         //重力の初期値
-        Physics.gravity = new Vector3(_gravityX, _gravityY, 0);
+        Physics.gravity = new Vector3(0, Down_Gravity, 0);
+
         _rigidbody = GetComponent<Rigidbody>();
+        _fire = FindObjectOfType<Fire>();
     }
 
 
@@ -59,10 +96,9 @@ public class Player : MonoBehaviour
             var r = Input.GetAxis("Horizontal");
             transform.Translate(r / 5, 0, 0);
         }
-
-        if (Input.GetKey(KeyCode.J))
+        if (Input.GetMouseButtonDown(0))
         {
-            JumpSystem(_rigidbody, _playerMode, ref _jump, Jump_Power);
+            JumpSystem(ref _jump);
         }
         if (Input.GetKey(KeyCode.I))
         {
@@ -73,19 +109,9 @@ public class Player : MonoBehaviour
             _gravityMode = false;
         }
 
+        //各状態の重力処理
+        GravitySystem(ref _gravityMode);
 
-
-        //プレイヤーの各状態の処理
-        switch (_playerMode)
-        {
-            case PlayerMode.WATER:
-
-                break;
-
-            case PlayerMode.AIR:
-
-                break;
-        }
     }
 
 
@@ -102,9 +128,14 @@ public class Player : MonoBehaviour
         //プレイヤーが火に触れた時の処理
         if (collision.gameObject.tag == "Fire")
         {
-            if (!(_playerMode == PlayerMode.AIR))
+            if (_playerMode == PlayerMode.WATER)
             {
                 _playerMode = PlayerMode.AIR;
+            }
+            else if (_playerMode == PlayerMode.ICE)
+            {
+                _playerMode = PlayerMode.WATER;
+                _fire.Destroy();
             }
         }
 
