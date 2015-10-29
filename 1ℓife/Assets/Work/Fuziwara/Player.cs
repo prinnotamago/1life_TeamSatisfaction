@@ -89,25 +89,25 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(_playerMode);
-        //デバック用のキー操作
-        if (!((_playerMode == PlayerMode.ICE) && _jump))
-        {
-            var r = Input.GetAxis("Horizontal");
-            transform.Translate(r / 5, 0, 0);
-        }
+        //Debug.Log(_playerMode);
+        ////デバック用のキー操作
+        //if (!((_playerMode == PlayerMode.ICE) && _jump))
+        //{
+        //    var r = Input.GetAxis("Horizontal");
+        //    transform.Translate(r / 5, 0, 0);
+        //}
         if (Input.GetMouseButtonDown(0))
         {
             JumpSystem(ref _jump);
         }
-        if (Input.GetKey(KeyCode.I))
-        {
-            _gravityMode = true;
-        }
-        else if (Input.GetKey(KeyCode.O))
-        {
-            _gravityMode = false;
-        }
+        //if (Input.GetKey(KeyCode.I))
+        //{
+        //    _gravityMode = true;
+        //}
+        //else if (Input.GetKey(KeyCode.O))
+        //{
+        //    _gravityMode = false;
+        //}
 
         //各状態の重力処理
         GravitySystem(ref _gravityMode);

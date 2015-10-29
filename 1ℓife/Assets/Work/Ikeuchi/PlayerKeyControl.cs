@@ -30,9 +30,9 @@ public class PlayerKeyControl : MonoBehaviour {
         {
             transform.Translate(_moveValue, 0.0f, 0.0f);
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            GetComponent<Rigidbody>().AddForce(0.0f, 200.0f, 0.0f);
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    GetComponent<Rigidbody>().AddForce(0.0f, 200.0f, 0.0f);
+        //}
     }
 }
