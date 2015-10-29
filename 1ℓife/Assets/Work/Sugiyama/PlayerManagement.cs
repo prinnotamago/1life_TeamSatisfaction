@@ -13,30 +13,30 @@ public class PlayerManagement : MonoBehaviour
 
     //速度
     [SerializeField]
-    private float _groundSpeed = 0.2f;
+    private float _GROUND_SPEED = 0.2f;
     [SerializeField]
-    private float _skySpeed = 0.1f;
+    private float _SKY_SPEED = 0.1f;
 
     //摩擦力
     [SerializeField]
-    private float _friction = 0.1f;
+    private float _FRICTION = 0.1f;
 
     //空中にいるかどうかのフラグ
     private bool _jump = true;
 
-    //プレイヤーの各状態を表す変数
+    //プレイヤーの各状態を表す定数
     private enum PlayerMode
     {
-        WATER = 0,
-        AIR = 1,
-        ICE = 2,
+        _WATER = 0,
+        _AIR = 1,
+        _ICE = 2,
     }
-
+    //プレイヤーの状態
     [SerializeField]
-    private PlayerMode _playerMode = PlayerMode.WATER;
+    private PlayerMode _playerMode = PlayerMode._WATER;
 
     //角度の限界値
-    private const float _maxAngle = 0.5f;
+    private const float _MAX_ANGLE = 0.5f;
 
     private Rigidbody _rigidBody;
 
@@ -64,19 +64,19 @@ public class PlayerManagement : MonoBehaviour
         //スマホの角度
         float angle = Input.gyro.gravity.x;
         //最大値最低値の設定
-        if (Input.gyro.gravity.x >= _maxAngle) angle = _maxAngle;
-        if (Input.gyro.gravity.x <= -_maxAngle) angle = -_maxAngle;
+        if (Input.gyro.gravity.x >= _MAX_ANGLE) angle = _MAX_ANGLE;
+        if (Input.gyro.gravity.x <= -_MAX_ANGLE) angle = -_MAX_ANGLE;
 
         //氷状態の時はジャンプモードをオフに
-        if (_playerMode == PlayerMode.ICE) _jump = false;
+        if (_playerMode == PlayerMode._ICE) _jump = false;
 
         //速度の代入
         float speed;
-        if (!_jump) speed = _groundSpeed * angle;
-        else speed = _skySpeed * angle;
+        if (!_jump) speed = _GROUND_SPEED * angle;
+        else speed = _SKY_SPEED * angle;
 
         //水蒸気状態の時は操作が反転する
-        if (_playerMode == PlayerMode.AIR) speed = speed * -1.0f;
+        if (_playerMode == PlayerMode._AIR) speed = speed * -1.0f;
 
         //プレイヤーの移動
         transform.Translate(speed, 0, 0);
@@ -84,13 +84,13 @@ public class PlayerManagement : MonoBehaviour
         //PCでの操作確認用デバックキー
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            if (!_jump) transform.Translate((_groundSpeed * -0.3f), 0, 0);
-            else transform.Translate((_skySpeed * -0.3f), 0, 0);
+            if (!_jump) transform.Translate((_GROUND_SPEED * -0.3f), 0, 0);
+            else transform.Translate((_SKY_SPEED * -0.3f), 0, 0);
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            if (!_jump) transform.Translate((_groundSpeed * 0.3f), 0, 0);
-            else transform.Translate((_skySpeed * 0.3f), 0, 0);
+            if (!_jump) transform.Translate((_GROUND_SPEED * 0.3f), 0, 0);
+            else transform.Translate((_SKY_SPEED * 0.3f), 0, 0);
         }
         //再起動デバックキー
         //if (Input.GetMouseButtonDown(0)) Application.LoadLevel("PlayerScene");
@@ -110,7 +110,7 @@ public class PlayerManagement : MonoBehaviour
             //角度の取得
             float floorAngle = -1 * (collision.transform.eulerAngles.z);
             if (floorAngle <= -180) floorAngle = (360 + floorAngle);
-            transform.Translate((floorAngle*(_friction/200)), 0, 0);
+            transform.Translate((floorAngle*(_FRICTION/200)), 0, 0);
         }
     }
 
