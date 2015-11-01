@@ -70,15 +70,16 @@
   <ItemGroup>
     <Compile Include="Assets\Work\Fuziwara\Fire.cs" />
     <Compile Include="Assets\Work\Fuziwara\Player.cs" />
-    <Compile Include="Assets\Work\Ikeuchi\CameraReference.cs" />
-    <Compile Include="Assets\Work\Ikeuchi\CreateWater.cs" />
-    <Compile Include="Assets\Work\Ikeuchi\HitBoxMove.cs" />
-    <Compile Include="Assets\Work\Ikeuchi\JointWater.cs" />
-    <Compile Include="Assets\Work\Ikeuchi\MeshTriangle.cs" />
-    <Compile Include="Assets\Work\Ikeuchi\PlayerKeyControl.cs" />
-    <Compile Include="Assets\Work\Ikeuchi\RayTest.cs" />
-    <Compile Include="Assets\Work\Ikeuchi\TextureOffsetMove.cs" />
-    <Compile Include="Assets\Work\Ikeuchi\WaterMove.cs" />
+    <Compile Include="Assets\Work\Ikeuchi\Player\CameraReference.cs" />
+    <Compile Include="Assets\Work\Ikeuchi\Player\CreateWater.cs" />
+    <Compile Include="Assets\Work\Ikeuchi\Player\PlayerKeyControl.cs" />
+    <Compile Include="Assets\Work\Ikeuchi\Player\PlayerWaterDestroy.cs" />
+    <Compile Include="Assets\Work\Ikeuchi\Test\HitBoxMove.cs" />
+    <Compile Include="Assets\Work\Ikeuchi\Test\JointWater.cs" />
+    <Compile Include="Assets\Work\Ikeuchi\Test\RayTest.cs" />
+    <Compile Include="Assets\Work\Ikeuchi\Test\TextureOffsetMove.cs" />
+    <Compile Include="Assets\Work\Ikeuchi\Water\MeshTriangle.cs" />
+    <Compile Include="Assets\Work\Ikeuchi\Water\WaterMove.cs" />
     <Compile Include="Assets\Work\Sugiyama\DeathZone.cs" />
     <Compile Include="Assets\Work\Sugiyama\PlayerManagement.cs" />
     <Compile Include="Assets\Work\Sugiyama\TeamProject\DebugLogRotate.cs" />
@@ -91,8 +92,8 @@
     <None Include="Assets\Work\Aramaki\test.txt" />
     <None Include="Assets\Work\Fuzimori\test.txt" />
     <None Include="Assets\Work\Fuziwara\test.txt" />
-    <None Include="Assets\Work\Ikeuchi\CullingOff.shader" />
-    <None Include="Assets\Work\Ikeuchi\test.txt" />
+    <None Include="Assets\Work\Ikeuchi\Test\test.txt" />
+    <None Include="Assets\Work\Ikeuchi\Water\CullingOff.shader" />
     <None Include="Assets\Work\Sugiyama\test.txt" />
     <None Include="Assets\Work\Ueno\test.txt" />
   </ItemGroup>

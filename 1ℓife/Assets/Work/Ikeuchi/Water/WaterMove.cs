@@ -7,7 +7,10 @@ public class WaterMove : MonoBehaviour {
     GameObject _playerObj;
 
     [SerializeField]
-    float velocityPower = 3.0f;
+    float _velocityPower = 3.0f;
+
+    [SerializeField]
+    bool _playerHoming = false;
 
     bool _isRendered = false;
     public bool _IS_RENDERED { get { return _isRendered; } }
@@ -21,7 +24,14 @@ public class WaterMove : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Move();
+        if (_playerHoming)
+        {
+            Move();          
+        }
+        else
+        {
+            PlayerOnHit();
+        }
 
         OnCameraWhether();
         //Debug.Log(_isRendered);
@@ -48,11 +58,11 @@ public class WaterMove : MonoBehaviour {
             if (value > 1.0f)
             {
                 //power = 5.0f;
-                GetComponent<Rigidbody>().velocity = targetDirection * value * velocityPower;
+                GetComponent<Rigidbody>().velocity = targetDirection * value * _velocityPower;
             }
             else
             {
-                GetComponent<Rigidbody>().velocity = targetDirection.normalized * velocityPower;
+                GetComponent<Rigidbody>().velocity = targetDirection.normalized * _velocityPower;
             }
         }
         else
@@ -61,6 +71,7 @@ public class WaterMove : MonoBehaviour {
         }
     }
 
+    // その水(中心)がカメラに映ってるかどうか調べる
     void OnCameraWhether()
     {
         Camera cameraObj = _playerObj.GetComponent<CameraReference>()._CAMERA_OBJ;
@@ -77,11 +88,39 @@ public class WaterMove : MonoBehaviour {
         }
     }
 
-    void OnWillRenderObject()
+    public void PlayerHomingOn()
     {
-        //_isRendered = true;
-        //Debug.Log(_isRendered);
+        _playerHoming = true;
     }
+
+    void PlayerOnHit()
+    {
+        Vector3 length = transform.position - _playerObj.transform.position;
+        float x = length.x * length.x;
+        float y = length.y * length.y;
+        float z = length.z * length.z;
+
+        float r = transform.localScale.x / 3 + _playerObj.transform.localScale.x / 3;
+        if(x + y + z < r * r * r)
+        {
+            GameObject parentObj = GameObject.Find("PlayerWaters");
+            if (parentObj != null)
+            {
+                transform.parent = parentObj.transform;
+                PlayerHomingOn();
+            }
+            else
+            {
+                Debug.Log("PlayerWaters が見つかりません");
+            }
+        }
+    }
+
+    //void OnWillRenderObject()
+    //{
+    //_isRendered = true;
+    //Debug.Log(_isRendered);
+    //}
 
     //private void OnBecameVisible() { _isRendered = true; }
     //private void OnBecameInvisible() { _isRendered = false; }
