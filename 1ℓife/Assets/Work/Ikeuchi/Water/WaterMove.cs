@@ -15,7 +15,7 @@ public class WaterMove : MonoBehaviour {
     bool _isRendered = false;
     public bool _IS_RENDERED { get { return _isRendered; } }
 
-    public Vector3 _GET_POSITION { get { return transform.position; } }
+    public Vector3 _GET_POSITION { get { return transform.position - new Vector3(0.0f, transform.localScale.y / 2, 0.0f); } }
 
     // Use this for initialization
     void Start () {
@@ -83,7 +83,8 @@ public class WaterMove : MonoBehaviour {
         {
             //Debug.Log(hit.transform.gameObject.name);
 
-            _isRendered = hit.transform.name == transform.name;
+            _isRendered = hit.transform == transform;
+       
             //Debug.Log(_isRendered);
         }
     }
