@@ -41,39 +41,42 @@ public class WaterMove : MonoBehaviour {
 
     void Move()
     {
-        if (_playerObj != null)
+        if (_playerObj == null)
         {
-            Vector3 targetPos = _playerObj.transform.position;
-            Vector3 myPos = transform.position;
-            Vector3 targetDirection = targetPos - myPos;
-            //transform.position += targetDirection / 50;
-            //GetComponent<Rigidbody>().AddForce(targetDirection * 5);
-            float value = 
-                targetDirection.x * targetDirection.x +
-                targetDirection.y * targetDirection.y +
-                targetDirection.z * targetDirection.z;
-            //if(value < 0.3) { power = 3.0f; }
+            Debug.Log("_playerObj が　NULL です");
+            return;
+        }
+        Vector3 targetPos = _playerObj.transform.position;
+        Vector3 myPos = transform.position;
+        Vector3 targetDirection = targetPos - myPos;
+        //transform.position += targetDirection / 50;
+        //GetComponent<Rigidbody>().AddForce(targetDirection * 5);
+        float value =
+            targetDirection.x * targetDirection.x +
+            targetDirection.y * targetDirection.y +
+            targetDirection.z * targetDirection.z;
+        //if(value < 0.3) { power = 3.0f; }
 
-            // 1.0f * 1.0f = 1.0f
-            if (value > 1.0f)
-            {
-                //power = 5.0f;
-                GetComponent<Rigidbody>().velocity = targetDirection * value * _velocityPower;
-            }
-            else
-            {
-                GetComponent<Rigidbody>().velocity = targetDirection.normalized * _velocityPower;
-            }
+        // 1.0f * 1.0f = 1.0f
+        if (value > 1.0f)
+        {
+            //power = 5.0f;
+            GetComponent<Rigidbody>().velocity = targetDirection * value * _velocityPower;
         }
         else
         {
-            Debug.Log("_playerObj が　NULL です");
+            GetComponent<Rigidbody>().velocity = targetDirection.normalized * _velocityPower;
         }
     }
 
     // その水(中心)がカメラに映ってるかどうか調べる
     void OnCameraWhether()
     {
+        if (_playerObj == null)
+        {
+            Debug.Log("_playerObj が　NULL です");
+            return;
+        }
         Camera cameraObj = _playerObj.GetComponent<CameraReference>()._CAMERA_OBJ;
         Vector3 screenPoint = cameraObj.WorldToScreenPoint(transform.position);
 
@@ -96,6 +99,12 @@ public class WaterMove : MonoBehaviour {
 
     void PlayerOnHit()
     {
+        if (_playerObj == null)
+        {
+            Debug.Log("_playerObj が　NULL です");
+            return;
+        }
+
         Vector3 length = transform.position - _playerObj.transform.position;
         float x = length.x * length.x;
         float y = length.y * length.y;
@@ -109,6 +118,7 @@ public class WaterMove : MonoBehaviour {
             {
                 transform.parent = parentObj.transform;
                 PlayerHomingOn();
+                GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             }
             else
             {
