@@ -24,16 +24,9 @@ public class PlayerManagement : MonoBehaviour
     //空中にいるかどうかのフラグ
     private bool _jump = true;
 
-    //プレイヤーの各状態を表す定数
-    private enum PlayerMode
-    {
-        _WATER = 0,
-        _AIR = 1,
-        _ICE = 2,
-    }
     //プレイヤーの状態
     [SerializeField]
-    private PlayerMode _playerMode = PlayerMode._WATER;
+    private Player _fujiwaraPlayer;
 
     //角度の限界値
     private const float _MAX_ANGLE = 0.5f;
@@ -50,6 +43,10 @@ public class PlayerManagement : MonoBehaviour
     {
         //コンポーネントを代入
         _rigidBody = GetComponent<Rigidbody>();
+
+        //藤原プレイヤーを代入
+        _fujiwaraPlayer = GetComponent<Player>();
+
         //XY軸の回転を無効化
         _rigidBody.constraints = RigidbodyConstraints.FreezeRotationX |
                          RigidbodyConstraints.FreezeRotationY |
@@ -68,7 +65,7 @@ public class PlayerManagement : MonoBehaviour
         if (Input.gyro.gravity.x <= -_MAX_ANGLE) angle = -_MAX_ANGLE;
 
         //氷状態の時はジャンプモードをオフに
-        if (_playerMode == PlayerMode._ICE) _jump = false;
+        if (_fujiwaraPlayer._playerMode == Player.PlayerMode.ICE) _jump = false;
 
         //速度の代入
         float speed;
@@ -76,7 +73,7 @@ public class PlayerManagement : MonoBehaviour
         else speed = _SKY_SPEED * angle;
 
         //水蒸気状態の時は操作が反転する
-        if (_playerMode == PlayerMode._AIR) speed = speed * -1.0f;
+        if (_fujiwaraPlayer._playerMode == Player.PlayerMode.AIR) speed = speed * -1.0f;
 
         //プレイヤーの移動
         transform.Translate(speed, 0, 0);
