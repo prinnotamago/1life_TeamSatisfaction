@@ -3,16 +3,16 @@ using System.Collections;
 
 public class Player : MonoBehaviour
 {
-    Rigidbody _rigidbody;
-    Fire _fire;
+    private Rigidbody _rigidbody;
+    private Fire _fire;
 
     //重力を反転させるためのbool
     private bool _gravityMode = false;
     //重力
     [SerializeField]
-    private float Down_Gravity = 50.0f;
+    private Vector3 Down_Gravity = new Vector3(0, 1, 0);
     [SerializeField]
-    private float Fly_Gravity = 1;
+    private Vector3 Fly_Gravity = new Vector3(0, 1, 0);
 
 
     //プレイヤーの各状態を表す変数
@@ -28,8 +28,10 @@ public class Player : MonoBehaviour
     public PlayerMode _PLAYER_MODE_ICE { get { return PlayerMode.ICE; } }
     public PlayerMode _PLAYER_MODE_AIR { get { return PlayerMode.AIR; } }
 
+    //状態変化前の変数を格納する変数
+    private PlayerMode _changeOldStay = 0;
     //状態変化先の変数を格納する変数
-    private PlayerMode _changeStay = 0;
+    private PlayerMode _changeNewStay = 0;
 
 
     //ジャンプ関係の変数
@@ -67,11 +69,11 @@ public class Player : MonoBehaviour
     {
         if (_gravityMode)
         {
-            Physics.gravity = new Vector3(0, Fly_Gravity, 0);
+            _rigidbody.AddForce(Fly_Gravity, ForceMode.Acceleration);
         }
         else
         {
-            Physics.gravity = new Vector3(0, -1 * Down_Gravity, 0);
+            _rigidbody.AddForce(-1 * Down_Gravity, ForceMode.Acceleration);
         }
 
         switch (_playerMode)
@@ -92,7 +94,7 @@ public class Player : MonoBehaviour
 
 
     //状態変化
-    private void ChangeState(Collision collision)
+    private void ChangeState(Collision collision, ref PlayerMode _changeOldStay)
     {
         //オブジェクトの判別はtagで行っているので、tag追加お願いします
         //
@@ -101,13 +103,15 @@ public class Player : MonoBehaviour
         {
             if (_playerMode == PlayerMode.WATER)
             {
+                _changeOldStay = _playerMode;
                 _playerMode = PlayerMode.CHANGE;
-                _changeStay = PlayerMode.AIR;
+                _changeNewStay = PlayerMode.AIR;
             }
             else if (_playerMode == PlayerMode.ICE)
             {
+                _changeOldStay = _playerMode;
                 _playerMode = PlayerMode.CHANGE;
-                _changeStay = PlayerMode.WATER;
+                _changeNewStay = PlayerMode.WATER;
             }
         }
 
@@ -118,16 +122,18 @@ public class Player : MonoBehaviour
             {
                 if (_playerMode == PlayerMode.AIR)
                 {
+                    _changeOldStay = _playerMode;
                     _playerMode = PlayerMode.CHANGE;
-                    _changeStay = PlayerMode.WATER;
+                    _changeNewStay = PlayerMode.WATER;
                 }
             }
             else
             {
                 if (_playerMode == PlayerMode.WATER)
                 {
+                    _changeOldStay = _playerMode;
                     _playerMode = PlayerMode.CHANGE;
-                    _changeStay = PlayerMode.ICE;
+                    _changeNewStay = PlayerMode.ICE;
                 }
             }
         }
@@ -137,9 +143,6 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        //重力の初期値
-        Physics.gravity = new Vector3(0, Down_Gravity, 0);
-
         _rigidbody = GetComponent<Rigidbody>();
         _fire = FindObjectOfType<Fire>();
     }
@@ -175,10 +178,15 @@ public class Player : MonoBehaviour
         {
             _changeCount++;
 
-            //一定時間たったら
             if (_changeCount > _changeTime * 60)
             {
-                _playerMode = _changeStay;
+                _playerMode = _changeNewStay;
+                _changeCount = 0;
+            }
+            else if (_changeNewStay == PlayerMode.WATER)
+            {
+                _playerMode = _changeNewStay;
+                _changeCount = 0;
             }
         }
 
@@ -198,12 +206,13 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        ChangeState(collision);
+        ChangeState(collision, ref _changeOldStay);
 
         //プレイヤーが着地している時
         if (collision.gameObject.tag == "Floor")
         {
             _jump = false;
+            
         }
 
         //プレイヤーが壊せる壁に触れた時の処理
