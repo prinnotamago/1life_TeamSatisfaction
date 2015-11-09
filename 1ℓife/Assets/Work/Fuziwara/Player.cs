@@ -152,7 +152,7 @@ public class Player : MonoBehaviour
         if (!((_playerMode == PlayerMode.ICE) && _jump))
         {
             var r = Input.GetAxis("Horizontal");
-            transform.Translate(r / 5, 0, 0);
+            transform.Translate(r / 20, 0, 0);
         }
         if (Input.GetMouseButtonDown(0))
         {

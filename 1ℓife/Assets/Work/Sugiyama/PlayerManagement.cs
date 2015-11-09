@@ -107,7 +107,7 @@ public class PlayerManagement : MonoBehaviour
             //角度の取得
             float floorAngle = -1 * (collision.transform.eulerAngles.z);
             if (floorAngle <= -180) floorAngle = (360 + floorAngle);
-            transform.Translate((floorAngle*(_FRICTION/200)), 0, 0);
+            transform.Translate((floorAngle * (_FRICTION / 200)), 0, 0);
         }
     }
 
