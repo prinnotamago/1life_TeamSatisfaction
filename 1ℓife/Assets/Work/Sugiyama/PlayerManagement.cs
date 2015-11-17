@@ -101,13 +101,13 @@ public class PlayerManagement : MonoBehaviour
             //地面にいる判定
             _jump = false;
 
-            //地面と同じ角度にする
-            this.transform.rotation = collision.transform.rotation;
+            ////地面と同じ角度にする
+            //this.transform.rotation = collision.transform.rotation;
 
-            //角度の取得
-            float floorAngle = -1 * (collision.transform.eulerAngles.z);
-            if (floorAngle <= -180) floorAngle = (360 + floorAngle);
-            transform.Translate((floorAngle * (_FRICTION / 200)), 0, 0);
+            ////角度の取得
+            //float floorAngle = -1 * (collision.transform.eulerAngles.z);
+            //if (floorAngle <= -180) floorAngle = (360 + floorAngle);
+            //transform.Translate((floorAngle * (_FRICTION / 200)), 0, 0);
         }
     }
 

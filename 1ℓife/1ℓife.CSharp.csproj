@@ -74,6 +74,8 @@
     <Compile Include="Assets\Work\Ikeuchi\Player\CreateWater.cs" />
     <Compile Include="Assets\Work\Ikeuchi\Player\PlayerKeyControl.cs" />
     <Compile Include="Assets\Work\Ikeuchi\Player\PlayerWaterDestroy.cs" />
+    <Compile Include="Assets\Work\Ikeuchi\Pond\Pond.cs" />
+    <Compile Include="Assets\Work\Ikeuchi\Pond\PondWater.cs" />
     <Compile Include="Assets\Work\Ikeuchi\Test\HitBoxMove.cs" />
     <Compile Include="Assets\Work\Ikeuchi\Test\JointWater.cs" />
     <Compile Include="Assets\Work\Ikeuchi\Test\RayTest.cs" />
@@ -93,6 +95,7 @@
     <None Include="Assets\Work\Aramaki\test.txt" />
     <None Include="Assets\Work\Fuzimori\test.txt" />
     <None Include="Assets\Work\Fuziwara\test.txt" />
+    <None Include="Assets\Work\Ikeuchi\NewSurfaceShader.shader" />
     <None Include="Assets\Work\Ikeuchi\Test\test.txt" />
     <None Include="Assets\Work\Ikeuchi\Water\CullingOff.shader" />
     <None Include="Assets\Work\Sugiyama\test.txt" />

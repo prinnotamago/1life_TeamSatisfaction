@@ -12,7 +12,11 @@ public class WaterMove : MonoBehaviour {
     [SerializeField]
     bool _playerHoming = false;
 
-    bool _isRendered = false;
+    //bool _isRendered = false;
+    bool _isRendered = true;
+
+    float _sizeOffset;
+
     public bool _IS_RENDERED { get { return _isRendered; } }
 
     public Vector3 _GET_POSITION { get { return transform.position - new Vector3(0.0f, transform.localScale.y / 2, 0.0f); } }
@@ -20,7 +24,8 @@ public class WaterMove : MonoBehaviour {
     // Use this for initialization
     void Start () {
         _playerObj = GameObject.Find(_playerObj.name);
-	}
+        _sizeOffset = _playerObj.GetComponent<SphereCollider>().radius;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -33,7 +38,7 @@ public class WaterMove : MonoBehaviour {
             PlayerOnHit();
         }
 
-        OnCameraWhether();
+        //OnCameraWhether();
         //Debug.Log(_isRendered);
         //_isRendered = false;
         //Debug.Log(_isRendered);
@@ -46,7 +51,12 @@ public class WaterMove : MonoBehaviour {
             Debug.Log("_playerObj が　NULL です");
             return;
         }
-        Vector3 targetPos = _playerObj.transform.position;
+        var offset =
+            new Vector3(
+                0.0f,
+                -_playerObj.GetComponent<SphereCollider>().radius,
+                0.0f);
+        Vector3 targetPos = _playerObj.transform.position + offset;
         Vector3 myPos = transform.position;
         Vector3 targetDirection = targetPos - myPos;
         //transform.position += targetDirection / 50;
@@ -67,6 +77,10 @@ public class WaterMove : MonoBehaviour {
         {
             GetComponent<Rigidbody>().velocity = targetDirection.normalized * _velocityPower;
         }
+
+        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(_playerObj.transform.position - transform.position), 0.07f);
+        ////transform.position += new Vector3(transform.forward.x, transform.forward.y, 0.0f) * 0.05f;
+        //GetComponent<Rigidbody>().velocity = new Vector3(transform.forward.x, transform.forward.y, 0.0f) * 5.0f;
     }
 
     // その水(中心)がカメラに映ってるかどうか調べる
@@ -105,20 +119,26 @@ public class WaterMove : MonoBehaviour {
             return;
         }
 
-        Vector3 length = transform.position - _playerObj.transform.position;
+        var offset =
+            new Vector3(
+                0.0f,
+                -_sizeOffset,
+                0.0f);
+        Vector3 length = transform.position + offset - _playerObj.transform.position;
         float x = length.x * length.x;
         float y = length.y * length.y;
-        float z = length.z * length.z;
+        //float z = length.z * length.z;
 
-        float r = transform.localScale.x / 3 + _playerObj.transform.localScale.x / 3;
-        if(x + y + z < r * r * r)
+        float r = (_sizeOffset + _sizeOffset) * 2.0f;
+        //if(x + y + z < r * r * r)
+        if (x + y < r * r)
         {
             GameObject parentObj = GameObject.Find("PlayerWaters");
             if (parentObj != null)
             {
                 transform.parent = parentObj.transform;
                 PlayerHomingOn();
-                GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                //GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             }
             else
             {

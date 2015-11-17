@@ -54,14 +54,14 @@ public class CreateWater : MonoBehaviour {
             if (_playerHoming)
             {
                 // プレイヤーをホーミングする水を作るなら
-                Createobj.transform.position = _createPositionObj.transform.position + new Vector3(Mathf.Cos(angle) * num / 400.0f, 0.0f, Mathf.Sin(angle) * num / 400.0f);
+                Createobj.transform.position = _createPositionObj.transform.position + new Vector3(Mathf.Cos(angle) * num / 400.0f, Mathf.Sin(angle) * num / 400.0f, 0.0f);
                 Createobj.GetComponent<WaterMove>().PlayerHomingOn();
             }
             else
             {
                 // 回復用の水を作るなら
                 Createobj.transform.position = _createPositionObj.transform.position + new Vector3(Mathf.Cos(angle) * num / 400.0f, Mathf.Sin(angle) * num / 400.0f, 0.0f);
-                Createobj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
+                //Createobj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
             }
         }
         else
