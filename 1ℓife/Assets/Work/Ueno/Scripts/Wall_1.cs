@@ -6,6 +6,7 @@ public class Wall_1 : MonoBehaviour
     public GameObject Wall_parts;
     private float x1 = 0.25f;   //0.25f or 0.1f
 
+    private float destroyTime = 0.05f;
 
 	void Start () 
     {
@@ -22,18 +23,18 @@ public class Wall_1 : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Destroy(this.gameObject);
+            Destroy(this.gameObject, destroyTime);
 
             Instantiate(Wall_parts, new Vector3
                     (transform.position.x, transform.position.y,
                     transform.position.z), Quaternion.identity);
 
             Instantiate(Wall_parts, new Vector3
-                    (transform.position.x + x1, transform.position.y,
+                    (transform.position.x, transform.position.y + 0.25f,
                     transform.position.z), Quaternion.identity);
 
             Instantiate(Wall_parts, new Vector3
-                    (transform.position.x - x1, transform.position.y,
+                    (transform.position.x, transform.position.y + 0.3f,
                     transform.position.z), Quaternion.identity);
 
         }
