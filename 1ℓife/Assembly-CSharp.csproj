@@ -49,6 +49,25 @@
      <Compile Include="Assets\Work\Fuziwara\Resources\Scripts\Fire.cs" />
      <Compile Include="Assets\Work\Fuziwara\Resources\Scripts\Player.cs" />
      <Compile Include="Assets\Work\Fuziwara\Resources\Scripts\Refrigerator.cs" />
+     <Compile Include="Assets\Work\Ikeuchi\CameraReference.cs" />
+     <Compile Include="Assets\Work\Ikeuchi\CreateWater.cs" />
+     <Compile Include="Assets\Work\Ikeuchi\HitBoxMove.cs" />
+     <Compile Include="Assets\Work\Ikeuchi\JointWater.cs" />
+     <Compile Include="Assets\Work\Ikeuchi\MeshTriangle.cs" />
+     <Compile Include="Assets\Work\Ikeuchi\Player\CameraReference.cs" />
+     <Compile Include="Assets\Work\Ikeuchi\Player\CreateWater.cs" />
+     <Compile Include="Assets\Work\Ikeuchi\Player\PlayerKeyControl.cs" />
+     <Compile Include="Assets\Work\Ikeuchi\Player\PlayerWaterDestroy.cs" />
+     <Compile Include="Assets\Work\Ikeuchi\PlayerKeyControl.cs" />
+     <Compile Include="Assets\Work\Ikeuchi\RayTest.cs" />
+     <Compile Include="Assets\Work\Ikeuchi\Test\HitBoxMove.cs" />
+     <Compile Include="Assets\Work\Ikeuchi\Test\JointWater.cs" />
+     <Compile Include="Assets\Work\Ikeuchi\Test\RayTest.cs" />
+     <Compile Include="Assets\Work\Ikeuchi\Test\TextureOffsetMove.cs" />
+     <Compile Include="Assets\Work\Ikeuchi\TextureOffsetMove.cs" />
+     <Compile Include="Assets\Work\Ikeuchi\Water\MeshTriangle.cs" />
+     <Compile Include="Assets\Work\Ikeuchi\Water\WaterMove.cs" />
+     <Compile Include="Assets\Work\Ikeuchi\WaterMove.cs" />
      <Compile Include="Assets\Work\Sugiyama\BrokenBranch.cs" />
      <Compile Include="Assets\Work\Sugiyama\CameraControl.cs" />
      <Compile Include="Assets\Work\Sugiyama\DeathZone.cs" />
@@ -61,16 +80,26 @@
      <Compile Include="Assets\Work\Ueno\Scripts\Wall_1.cs" />
      <Compile Include="Assets\Work\Ueno\Scripts\Wall_parts.cs" />
      <Compile Include="Assets\Work\Ueno\Scripts\Wall_pieces.cs" />
+     <None Include="Assets\Work\Ikeuchi\test.txt" />
+     <None Include="Assets\Work\Ikeuchi\Water\CullingOff.shader" />
      <None Include="Assets\Work\Ueno\Materials\test.txt" />
      <None Include="Assets\Work\Aramaki\test.txt" />
      <None Include="Assets\Work\Sugiyama\test.txt" />
      <None Include="Assets\Work\Fuzimori\test.txt" />
      <None Include="Assets\ProgramaReadme.txt" />
+     <None Include="Assets\Work\Ikeuchi\Test\test.txt" />
+     <None Include="Assets\Work\Ikeuchi\CullingOff.shader" />
+ <Reference Include="UnityEngine.Advertisements">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Analytics">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="Mono.Cecil">
  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/Mono.Cecil.dll</HintPath>
